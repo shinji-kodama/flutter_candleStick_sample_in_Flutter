@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:candlesticks/candlesticks.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -32,20 +33,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Candle> candles = List.generate(14, (i) {
-    return Candle(date: DateTime(2022, 1, i, 0, 0), open: i * 100, high: i *100 + 100, low: i*100-100, close: (i+1) * 100, volume: i.toDouble());
+    return Candle(date: DateTime(2022, 1, i + 1), open: i * 100, high: i * 100 + 150, low: i * 100 - 100, close: (i + 1) * 100, volume: Random().nextDouble() * 1000);
   });
 
-  // @override
-  // void initState() {
-  //   List<Candle> data = [
-  //     Candle(date: DateTime(2022, 1, 3, 0, 0), open: 1900.00, high: 1973.00, low: 1600.00, close: 1800.00, volume: 0),
-  //     Candle(date: DateTime(2022, 1, 2, 0, 0), open: 1800.00, high: 1950.00, low: 1800.00, close: 1900.00, volume: 1),
-  //     Candle(date: DateTime(2022, 1, 1, 0, 0), open: 1850.00, high: 1900.00, low: 1750.00, close: 1800.00, volume: 2),
-  //   ];
+  @override
+  void initState() {
+    List<Candle> data = [
+      Candle(date: DateTime(2022, 1, 17), open: 1900.00, high: 1973.00, low: 1600.00, close: 1800.00, volume: 3),
+      Candle(date: DateTime(2022, 1, 16), open: 1800.00, high: 1950.00, low: 1800.00, close: 1900.00, volume: 2),
+      Candle(date: DateTime(2022, 1, 15), open: 1850.00, high: 1900.00, low: 1750.00, close: 1800.00, volume: 1),
+    ];
 
-  //   data.forEach((Candle el) => candles.add(el));
-  //   super.initState();
-  // }
+    for (var candle in data) {
+      candles.add(candle);
+    }
+
+    candles.sort((a, b) => a.date.compareTo(b.date));
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
